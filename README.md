@@ -8,13 +8,10 @@
 项目的Bug和改进点，可在GitHub上以issue的方式直接提交给我。
 
 ##代码获取
-GitHub:
-
-##ConsistentHash
-写这个东西是为了实现一致性hash来控制redis集群.
+GitHub:https://github.com/Fourwenwen/consistent-hashing-redis.git
 
 ##项目结构
-spring-consistent-hash-cache 基于spring的一致性hash的redis集群方案的jar包。依赖进去项目，根据订制规则配置就可以使用。
+DHT-redis-cache 基于spring的一致性hash的redis集群方案的jar包。依赖进去项目，根据订制规则配置就可以使用。
 spring-boot-example 使用spring-consistent-hash-cache的spring boot例子
 spring-mvc-example 使用spring-consistent-hash-cache的spring mvc例子
 
@@ -44,7 +41,7 @@ spring-mvc-example 使用spring-consistent-hash-cache的spring mvc例子
 1. maven导入项目包
 <dependency>
     <groupId>win.pangniu.four</groupId>
-    <artifactId>spring-consistent-hash-cache</artifactId>
+    <artifactId>DHT-redis-cache</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>
 
