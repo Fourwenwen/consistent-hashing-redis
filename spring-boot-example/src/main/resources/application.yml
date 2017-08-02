@@ -1,0 +1,17 @@
+# Server settings (ServerProperties)
+server:
+  port: 9090
+  # 该服务绑定IP地址，启动服务器时如本机不是该IP地址则抛出异常启动失败，只有特殊需求的情况下才配置
+  # address: 127.0.0.1
+  contextPath: /
+  # Tomcat specifics
+  tomcat:
+    # 打开Tomcat的Access日志，并可以设置日志格式的方法
+    # accessLogEnabled: false
+    protocolHeader: x-forwarded-proto
+    remoteIpHeader: x-forwarded-for
+    basedir:
+    backgroundProcessorDelay: 30
+  session:
+    timeout: 30
+#log

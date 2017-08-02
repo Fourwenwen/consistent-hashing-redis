@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <!-- #################################################################### -->
+    <!-- # Jedis 连接池配置 -->
+    <!-- #################################################################### -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="minIdle">
+            <value>${redis.pool.minIdle}</value>
+        </property>
+        <property name="maxIdle">
+            <value>${redis.pool.maxIdle}</value>
+        </property>
+        <property name="maxWaitMillis">
+            <value>${redis.pool.maxWaitMillis}</value>
+        </property>
+        <property name="testOnBorrow">
+            <value>${redis.pool.testOnBorrow}</value>
+        </property>
+        <property name="testOnReturn">
+            <value>${redis.pool.testOnReturn}</value>
+        </property>
+        <property name="testWhileIdle">
+            <value>${redis.pool.testWhileIdle}</value>
+        </property>
+    </bean>
+
+    <!-- 哨兵配置,可选。 -->
+    <bean id="sentinelConfiguration" class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
+        <property name="master">
+            <bean class="org.springframework.data.redis.connection.RedisNode">
+                <property name="name" value="master"></property>
+            </bean>
+        </property>
+        <property name="sentinels">
+            <set>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="127.0.0.1"/>
+                    <constructor-arg name="port" value="26379"/>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+
+    <!-- #################################################################### -->
+    <!-- # Jedis 连接工厂 -->
+    <!-- #################################################################### -->
+    <bean id="jedisConnectionFactory" class="win.pangniu.four.cache.redis.HwRedisConnectionFactory">
+        <!--<property name="hostName" value="${redis.host}" />
+        <property name="password" value="${redis.password}" />
+        <property name="port" value="${redis.port}" />
+        <property name="timeout" value="${redis.timeout}" />
+        <property name="usePool" value="${redis.usePool}" />-->
+        <constructor-arg name="sentinelConfig" ref="sentinelConfiguration"/>
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+    </bean>
+
+    <!-- #################################################################### -->
+    <!-- # Jedis 模板 -->
+    <!-- #################################################################### -->
+    <bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    <bean id="redisTemplate" class="win.pangniu.four.cache.redis.HwRedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+        <property name="keySerializer" ref="stringRedisSerializer"/>
+        <property name="hashKeySerializer" ref="stringRedisSerializer"/>
+    </bean>
+
+    <!-- #################################################################### -->
+    <!-- # Jedis String模板 -->
+    <!-- #################################################################### -->
+    <!--<bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+         <property name="connectionFactory" ref="jedisConnectionFactory" />
+    </bean>-->
+
+    <!-- #################################################################### -->
+    <!-- # Redis 缓存管理器 -->
+    <!-- # 属性expires配置了多个缓存的名称及缓存失效时间 -->
+    <!-- #################################################################### -->
+    <bean id="redisCacheManager" class="win.pangniu.four.cache.redis.HwRedisCacheManager">
+        <constructor-arg name="template" ref="redisTemplate"/>
+        <property name="defaultExpiration">
+            <value>30</value>
+        </property>
+        <property name="expires">
+            <map>
+                <entry key="CACHE_HALF_A_MINUTE" value="30"/>
+                <entry key="CACHE_ONE_MINUTE" value="60"/>
+                <entry key="CACHE_QUARTER_HOUR" value="900"/>
+                <entry key="CACHE_HALF_A_HOUR" value="1800"/>
+                <entry key="CACHE_ONE_HOUR" value="3600"/>
+                <entry key="CACHE_TWO_HOUR" value="7200"/>
+                <entry key="CACHE_FOUR_HOUR" value="14400"/>
+                <entry key="CACHE_EIGHT_HOUR" value="28800"/>
+                <entry key="CACHE_HALF_A_DAY" value="43200"/>
+                <entry key="CACHE_ONE_DAY" value="86400"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- #################################################################### -->
+    <!-- # Dummy CacheManager 的配置 -->
+    <!-- #################################################################### -->
+    <bean id="cacheManager" class="org.springframework.cache.support.CompositeCacheManager">
+        <property name="fallbackToNoOpCache">
+            <value>false</value>
+        </property>
+        <property name="cacheManagers">
+            <list>
+                <ref bean="redisCacheManager"/>
+            </list>
+        </property>
+    </bean>
+
+    <!--  &lt;!&ndash; #################################################################### &ndash;&gt;
+      &lt;!&ndash; # 注册 Spring Cache 驱动实例 &ndash;&gt;
+      &lt;!&ndash; #################################################################### &ndash;&gt;
+      <cache:annotation-driven mode="aspectj" proxy-target-class="true" cache-manager="cacheManager" order="2"/>-->
+
+</beans>
