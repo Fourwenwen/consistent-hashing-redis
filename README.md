@@ -4,16 +4,16 @@
 
 目前关于redis集群方案，官方方案是Redis cluster,Redis3.0以后正式提供。大家可以了解下。
 虽然官方方案都有，并且网上也有很多关于这方面的内容，为什么还要自己造轮子。哈哈，程序员不久最喜欢造轮子。核心功能已经完成，但是会持续更新的。
-功能简陋，代码难看，多多谅解。任意的意见和建议，欢迎随意与我沟通。
+功能简陋，代码难看，多多谅解，仅供学习。任意的意见和建议，欢迎随意与我沟通。
 项目的Bug和改进点，可在GitHub上以issue的方式直接提交给我。
 
 ## 代码获取
 GitHub:https://github.com/Fourwenwen/consistent-hashing-redis.git
 
 ## 项目结构
-DHT-redis-cache 基于spring的一致性hash的redis集群方案的jar包。依赖进去项目，根据订制规则配置就可以使用。
-spring-boot-example 使用spring-consistent-hash-cache的spring boot例子
-spring-mvc-example 使用spring-consistent-hash-cache的spring mvc例子
+DHT-redis-cache 基于spring的一致性hash的redis集群方案的jar包。依赖进去项目，根据订制规则配置就可以使用。  
+spring-boot-example 使用spring-consistent-hash-cache的spring boot例子  
+spring-mvc-example 使用spring-consistent-hash-cache的spring mvc例子  
 
 ### 需要知识点
 - 基于spring开发的
