@@ -7,10 +7,10 @@
 功能简陋，代码难看，多多谅解。任意的意见和建议，欢迎随意与我沟通。
 项目的Bug和改进点，可在GitHub上以issue的方式直接提交给我。
 
-##代码获取
+## 代码获取
 GitHub:https://github.com/Fourwenwen/consistent-hashing-redis.git
 
-##项目结构
+## 项目结构
 DHT-redis-cache 基于spring的一致性hash的redis集群方案的jar包。依赖进去项目，根据订制规则配置就可以使用。
 spring-boot-example 使用spring-consistent-hash-cache的spring boot例子
 spring-mvc-example 使用spring-consistent-hash-cache的spring mvc例子
@@ -24,14 +24,14 @@ spring-mvc-example 使用spring-consistent-hash-cache的spring mvc例子
 <a name="配置说明"></a>
 ### 配置说明
 必须在项目resources目录下放置ch-cache.properties文件。  
-####redis服务器数量
+#### redis服务器数量
 -redis.count=2  
-####redis服务器0配置
+#### redis服务器0配置
 -redis.host0=192.168.0.1  
 -redis.port0=6379  
 -reids.passwd0=test  
 -redis.db.size0=16  
-####redis服务器1配置
+#### redis服务器1配置
 -redis.host1=192.168.0.2  
 -redis.port1=6380  
 -reids.passwd1=test  
