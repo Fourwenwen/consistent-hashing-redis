@@ -23,27 +23,29 @@ spring-mvc-example 使用spring-consistent-hash-cache的spring mvc例子
 
 <a name="配置说明"></a>
 ### 配置说明
-必须在项目resources目录下放置ch-cache.properties文件。
+必须在项目resources目录下放置ch-cache.properties文件。  
 ####redis服务器数量
--redis.count=2
+-redis.count=2  
 ####redis服务器0配置
--redis.host0=192.168.0.1
--redis.port0=6379
--reids.passwd0=test
--redis.db.size0=16
+-redis.host0=192.168.0.1  
+-redis.port0=6379  
+-reids.passwd0=test  
+-redis.db.size0=16  
 ####redis服务器1配置
--redis.host1=192.168.0.2
--redis.port1=6380
--reids.passwd1=test
--redis.db.size1=16
+-redis.host1=192.168.0.2  
+-redis.port1=6380  
+-reids.passwd1=test  
+-redis.db.size1=16  
 
 ### 使用方法（简单说明）
 1. maven导入项目包
+```
 <dependency>
     <groupId>win.pangniu.four</groupId>
     <artifactId>DHT-redis-cache</artifactId>
     <version>1.0-SNAPSHOT</version>
-</dependency>
+</dependency> 
+```
 
 2. 在项目resources文件加中添加ch-cache.properties文件。配置内容细看[配置说明](#配置说明)。
 
